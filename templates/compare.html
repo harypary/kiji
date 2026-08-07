@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}{{ compare.title }} | {{ site.title }}{% endblock %}
+{% block description %}{{ compare.left.name }}と{{ compare.right.name }}の料金を毎日確認して並べています。{% endblock %}
+{% block canonical %}compare/{{ compare.slug }}/{% endblock %}
+{% block content %}
+
+<h1>{{ compare.title }}</h1>
+<p class="lead">
+  両方の公式ページを毎日確認して、料金だけを並べています。
+  最終確認 {{ stats.checked_at }}。
+</p>
+
+<h2>料金の比較</h2>
+<table class="factors">
+  <thead><tr><th></th><th>{{ compare.left.name }}</th><th>{{ compare.right.name }}</th></tr></thead>
+  <tbody>
+  <tr>
+    <th>成果の種類</th>
+    <td>{{ compare.left.kind_label }}<span class="cat">{{ compare.left.effort }}</span></td>
+    <td>{{ compare.right.kind_label }}<span class="cat">{{ compare.right.effort }}</span></td>
+  </tr>
+  <tr>
+    <th>取得できた料金</th>
+    <td>
+      {% if compare.left.prices %}
+        {% for p in compare.left.prices %}{{ p.label }} {{ p.display }}<br>{% endfor %}
+      {% else %}—{% endif %}
+    </td>
+    <td>
+      {% if compare.right.prices %}
+        {% for p in compare.right.prices %}{{ p.label }} {{ p.display }}<br>{% endfor %}
+      {% else %}—{% endif %}
+    </td>
+  </tr>
+  <tr>
+    <th>実際に試したか</th>
+    <td>{% if compare.left.verified %}試しました{% else %}未検証{% endif %}</td>
+    <td>{% if compare.right.verified %}試しました{% else %}未検証{% endif %}</td>
+  </tr>
+  </tbody>
+</table>
+<p class="note">{{ compare.left.name }}: {{ compare.left.price_note }}</p>
+<p class="note">{{ compare.right.name }}: {{ compare.right.price_note }}</p>
+
+<h2>{{ compare.left.name }}</h2>
+{{ m.offer_card(compare.left, 0) }}
+<h2>{{ compare.right.name }}</h2>
+{{ m.offer_card(compare.right, 0) }}
+
+{% endblock %}

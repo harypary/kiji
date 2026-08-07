@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-08-07T13:17:50.797327+00:00",
+  "offers": {
+    "dmm-eikaiwa": {
+      "note": "",
+      "ok": true,
+      "signature": "e44d7759b9653093",
+      "slug": "dmm-eikaiwa",
+      "token_count": 17,
+      "ts": "2026-08-07T13:17:50.797327+00:00",
+      "values": [
+        {
+          "amount": 6980.0,
+          "confidence": "low",
+          "label": "スタンダードプラン"
+        },
+        {
+          "amount": 22880.0,
+          "confidence": "low",
+          "label": "プラスネイティブプラン"
+        }
+      ]
+    },
+    "nativecamp": {
+      "note": "",
+      "ok": true,
+      "signature": "aa5db9b8982fc235",
+      "slug": "nativecamp",
+      "token_count": 19,
+      "ts": "2026-08-07T13:17:50.797327+00:00",
+      "values": [
+        {
+          "amount": 6800.0,
+          "confidence": "high",
+          "label": "プレミアムプラン"
+        }
+      ]
+    }
+  }
+}

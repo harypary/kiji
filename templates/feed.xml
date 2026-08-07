@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>{{ site.title }} — 料金の変更</title>
+  <link>{{ site.base_url }}</link>
+  <description>{{ site.description }}</description>
+  <language>{{ site.lang }}</language>
+  <lastBuildDate>{{ now_rfc822 }}</lastBuildDate>
+{% for u in updates %}
+  <item>
+    <title>{{ u.name }}: {{ u.label }}</title>
+    <link>{{ site.base_url }}offers/{{ u.slug }}/</link>
+    <guid isPermaLink="false">{{ u.slug }}-{{ u.date }}</guid>
+    <pubDate>{{ now_rfc822 }}</pubDate>
+    <description>{% for label, before, after in u.lines %}{{ label }}: {{ before }} → {{ after }}. {% endfor %}</description>
+  </item>
+{% endfor %}
+</channel>
+</rss>

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{# with context を付けないとマクロから site が見えない #}
+{% import "_macros.html" as m with context %}
+{% block content %}
+
+<h1>{{ site.title }}</h1>
+<p class="lead">{{ site.tagline }}</p>
+
+<p>
+  掲載中の{{ stats.offers }}件について、公式サイトの料金ページを毎日1回自動で確認しています。
+  変わっていれば<a href="{{ site.base_url }}updates/">更新履歴</a>に日付つきで記録され、
+  このページの数字も入れ替わります。記録開始は {{ stats.tracked_since }} です。
+</p>
+
+<h2>掲載中のサービス</h2>
+{% for o in offers %}
+{{ m.offer_card(o, loop.index) }}
+{% endfor %}
+
+<h2>最近の変更</h2>
+{% if updates %}
+<table class="changes">
+  <thead><tr><th>日付</th><th>サービス</th><th>内容</th></tr></thead>
+  <tbody>
+  {% for u in updates %}
+  <tr>
+    <td>{{ u.date }}</td>
+    <td><a href="{{ site.base_url }}offers/{{ u.slug }}/">{{ u.name }}</a></td>
+    <td>
+      {{ u.label }}
+      {% for label, before, after in u.lines %}
+      <br><span class="cat">{{ label }}</span> {{ before }} → <strong>{{ after }}</strong>
+      {% endfor %}
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p><a href="{{ site.base_url }}updates/">更新履歴をすべて見る →</a></p>
+{% else %}
+<p class="note">まだ変更を検出していません。料金が変わった日にここへ記録されます。</p>
+{% endif %}
+
+{% endblock %}

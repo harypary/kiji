@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% block title %}{{ offer.name }}の料金と変更履歴 | {{ site.title }}{% endblock %}
+{% block description %}{{ offer.name }}の料金を毎日確認して記録しています。今の料金と、いつ変わったかの履歴。{% endblock %}
+{% block canonical %}offers/{{ offer.slug }}/{% endblock %}
+{% block content %}
+
+<h1>{{ offer.name }}</h1>
+<p class="lead">
+  {{ offer.category }}{% if offer.vendor %} / {{ offer.vendor }}{% endif %}
+  <span class="tag">{{ offer.kind_label }}</span>
+  {% if offer.effort %}<span class="cat">{{ offer.effort }}</span>{% endif %}
+</p>
+{% if offer.pitch %}<p>{{ offer.pitch }}</p>{% endif %}
+
+<h2>いまの料金</h2>
+{{ m.price_block(offer) }}
+
+{% if offer.points %}
+<h2>公表されている特徴</h2>
+<ul>
+  {% for p in offer.points %}<li>{{ p }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+{{ m.verdict_block(offer) }}
+
+<h2>料金の変更履歴</h2>
+{% if offer.history | length > 1 %}
+<p class="note">
+  記録開始 {{ offer.tracked_since }} / これまでに検出した変更 {{ offer.change_count }}回
+</p>
+<table class="history">
+  <thead><tr><th>確認日</th><th>料金</th></tr></thead>
+  <tbody>
+  {% for h in offer.history %}
+  <tr>
+    <td>{{ h.date }}</td>
+    <td>
+      {% if h.prices %}
+        {% for p in h.prices %}{{ p.label }} {{ p.display }}{% if not loop.last %} / {% endif %}{% endfor %}
+      {% else %}—{% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="note">
+  記録は {{ offer.tracked_since }} の1件だけです。料金が変わった日にだけ行が増えます。
+</p>
+{% endif %}
+
+<p>
+  <a class="cta" href="{{ offer.outbound_url }}" rel="{{ offer.rel }}" target="_blank">{{ offer.name }}の公式サイトを見る</a>
+  {% if offer.is_monetized %}<span class="cat">広告</span>{% endif %}
+</p>
+
+{% endblock %}

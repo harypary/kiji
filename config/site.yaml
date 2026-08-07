@@ -1,0 +1,28 @@
+# サイト全体の設定。運用で触るのはこのファイルと offers.yaml の2つ。
+
+site:
+  lang: ja
+  title: 試して比べる
+  tagline: 料金は毎日確認。変わった日も残しています。
+  description: >-
+    オンライン英会話をはじめとするサービスの料金を毎日自動で確認し、
+    変わった日を記録しています。今の料金と、いつ変わったかの履歴を公開しています。
+
+  author: harypary
+  # フッターに出る連絡先。クローラの User-Agent にも入るので実在させること。
+  # 苦情の窓口が無いクローラは問答無用でブロックされる。
+  contact_url: https://github.com/harypary
+  # GitHub Pages の公開URL。自分のユーザー名・リポジトリ名に必ず書き換えること。
+  base_url: https://harypary.github.io/kiji/
+
+generation:
+  # 同一ホストへの最低アクセス間隔(秒)。1.0 未満は設定できない。
+  request_interval_sec: 2.0
+  timeout_sec: 20
+  # 最終確認からこの日数を超えたら料金を伏せて「確認できていません」に切り替える。
+  # 古い料金を現在の料金として出し続けるのは読者を騙すことになる。
+  stale_after_days: 14
+  # /updates/ に出す件数
+  recent_updates: 60
+  # 個別ページの履歴テーブルの最大行数
+  history_rows: 24

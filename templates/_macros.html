@@ -1,0 +1,59 @@
+{# 案件カード。トップと比較記事で共通して使う。 #}
+{% macro offer_card(o, rank) %}
+<div class="card">
+  <h3>
+    {% if rank %}<span class="rank">{{ rank }}</span>{% endif %}
+    <a href="{{ site.base_url }}offers/{{ o.slug }}/">{{ o.name }}</a>
+    <span class="tag">{{ o.kind_label }}</span>
+    {% if o.verified %}
+      <span class="tag ok">実際に試しました</span>
+    {% else %}
+      <span class="tag risk">未検証</span>
+    {% endif %}
+  </h3>
+  {% if o.pitch %}<p class="lead">{{ o.pitch }}</p>{% endif %}
+  {{ price_block(o) }}
+  {% if o.points %}
+  <ul>
+    {% for p in o.points %}<li>{{ p }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+  <p>
+    <a class="cta" href="{{ o.outbound_url }}" rel="{{ o.rel }}" target="_blank">{{ o.name }}の公式サイト</a>
+    {% if o.is_monetized %}<span class="cat">広告</span>{% endif %}
+  </p>
+</div>
+{% endmacro %}
+
+{# 料金。取れなかった場合に推測で埋めず、理由を書く。 #}
+{% macro price_block(o) %}
+{% if o.needs_review %}
+<p class="warn">
+  公式サイトの内容が変わっています。下の料金は古い可能性があります。
+</p>
+{% endif %}
+{% if o.prices %}
+<table class="factors">
+  <tbody>
+  {% for p in o.prices %}
+  <tr><th>{{ p.label }}</th><td class="num">{{ p.display }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+<p class="note">{{ o.price_note }}（最終確認 {{ o.last_checked }}）</p>
+{% endmacro %}
+
+{% macro verdict_block(o) %}
+{% if o.verified %}
+<h2>実際に試した感想</h2>
+<p>{{ o.verdict }}</p>
+{% else %}
+<h2>まだ試していません</h2>
+<p class="warn">
+  この案件はまだ自分で試していないため、使用感については書けません。
+  このページに載っているのは、公式サイトから自動で取得した料金と、公表されている事実だけです。
+  試したうえでの評価は、実際に使ってから追記します。
+</p>
+{% endif %}
+{% endmacro %}

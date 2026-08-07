@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ site.title }}{% endblock %}</title>
+<meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+<link rel="canonical" href="{{ site.base_url }}{% block canonical %}{% endblock %}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.base_url }}feed.xml">
+<link rel="stylesheet" href="{{ site.base_url }}assets/style.css">
+</head>
+<body>
+<header class="site">
+  <a class="brand" href="{{ site.base_url }}">{{ site.title }}</a>
+  <nav>
+    <a href="{{ site.base_url }}updates/">更新履歴</a>
+    <a href="{{ site.base_url }}methodology/">調べ方</a>
+    <a href="{{ site.base_url }}disclosure/">広告について</a>
+  </nav>
+</header>
+
+<p class="warn" style="background:#f4f8ff;border-color:#06c">
+  このページには広告（アフィリエイトリンク）が含まれます。
+  掲載順位は<a href="{{ site.base_url }}methodology/">公開している基準</a>のみで決めており、報酬額では変えていません。
+</p>
+
+{% if stats.stale %}
+<p class="warn">
+  最終確認から時間が経っています（最終確認 {{ stats.checked_at }}）。
+  表示中の料金は現在のものと違う可能性があります。
+</p>
+{% endif %}
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site">
+  <p>
+    {{ stats.offers }}件を毎日確認中 / うち実際に試したもの {{ stats.verified }}件 /
+    記録開始 {{ stats.tracked_since }} / 最終確認 {{ stats.checked_at }} /
+    このページの生成 {{ generated }}
+  </p>
+  <p>
+    料金は各社の公式ページから自動で取得した参考値です。申し込み前に必ず公式サイトでご確認ください。
+  </p>
+  <p>
+    <a href="{{ site.contact_url }}" rel="noopener">{{ site.author }}</a> /
+    <a href="{{ site.base_url }}disclosure/">広告に関する開示</a>
+  </p>
+</footer>
+</body>
+</html>

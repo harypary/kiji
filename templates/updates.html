@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}料金の変更履歴 | {{ site.title }}{% endblock %}
+{% block description %}掲載中のサービスの料金が変わった日と、変更前後の内容の記録。{{ stats.tracked_since }} から毎日確認しています。{% endblock %}
+{% block canonical %}updates/{% endblock %}
+{% block content %}
+
+<h1>更新履歴</h1>
+<p class="lead">
+  料金が変わった日だけを記録しています。{{ stats.tracked_since }} から記録開始、これまでに{{ stats.updates }}件。
+</p>
+<p class="note">
+  公式サイトは「今」の料金しか載せません。先月いくらだったかは、その時点で記録していない限り手に入りません。
+  そのために毎日確認しています。
+</p>
+
+{% if updates %}
+<table class="changes">
+  <thead><tr><th>日付</th><th>サービス</th><th>内容</th></tr></thead>
+  <tbody>
+  {% for u in updates %}
+  <tr>
+    <td>{{ u.date }}</td>
+    <td><a href="{{ site.base_url }}offers/{{ u.slug }}/">{{ u.name }}</a></td>
+    <td>
+      {{ u.label }}
+      {% for label, before, after in u.lines %}
+      <br><span class="cat">{{ label }}</span> {{ before }} → <strong>{{ after }}</strong>
+      {% endfor %}
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="note">まだ変更を検出していません。</p>
+{% endif %}
+
+{% endblock %}

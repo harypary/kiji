@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}このサイトの調べ方 | {{ site.title }}{% endblock %}
+{% block description %}料金をどうやって取得し、掲載順位をどう決めているかの全部。{% endblock %}
+{% block canonical %}methodology/{% endblock %}
+{% block content %}
+
+<h1>このサイトの調べ方</h1>
+
+<h2>料金の取得</h2>
+<p>
+  掲載中の各サービスについて、公式サイトの料金ページを1日1回だけ自動で取得しています。
+  同じサイトへは2秒以上の間隔をあけ、robots.txt は毎回確認しています。
+</p>
+<p>
+  取得した金額は<strong>自動抽出の参考値</strong>です。
+  通常価格と割引価格が並記されているページなど、どれがそのプランの料金か
+  機械的に断定できない場合があります。そういう値は<strong>掲載していません</strong>。
+  推測で数字を埋めるより、空欄にして公式サイトへ案内する方を選んでいます。
+</p>
+<p>
+  料金がJavaScriptで描画されていてHTMLに含まれないサイトは、そもそも自動追跡の対象外にしています。
+</p>
+
+<h2>掲載順位の決め方</h2>
+<p>
+  順位は次の2つだけで決めています。報酬額の多寡では変えていません。
+</p>
+<ol>
+  <li>成果条件の軽さ（無料で試せるものほど上）</li>
+  <li><strong>実際に自分で試したかどうか</strong>。試していないものは順位を大きく下げています</li>
+</ol>
+<p class="note">
+  現在、掲載{{ stats.offers }}件のうち実際に試したものは{{ stats.verified }}件です。
+  試していないサービスのページには「まだ試していません」と明記しており、
+  使用感については何も書いていません。
+</p>
+
+<h2>掲載しているサービス</h2>
+<table class="factors">
+  <thead><tr><th>サービス</th><th>成果の種類</th><th>試したか</th><th>追跡</th></tr></thead>
+  <tbody>
+  {% for o in offers %}
+  <tr>
+    <th><a href="{{ site.base_url }}offers/{{ o.slug }}/">{{ o.name }}</a></th>
+    <td>{{ o.kind_label }}</td>
+    <td>{% if o.verified %}試しました{% else %}未検証{% endif %}</td>
+    <td>{% if o.watch_url %}毎日確認{% else %}自動追跡なし{% endif %}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>保証しないこと</h2>
+<p>
+  掲載している料金は自動取得した参考値であり、正確性を保証しません。
+  申し込みの前に必ず公式サイトでご確認ください。
+</p>
+
+{% endblock %}

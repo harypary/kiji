@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{{ site.base_url }}</loc><lastmod>{{ generated }}</lastmod></url>
+  <url><loc>{{ site.base_url }}updates/</loc><lastmod>{{ generated }}</lastmod></url>
+  <url><loc>{{ site.base_url }}methodology/</loc><lastmod>{{ generated }}</lastmod></url>
+  <url><loc>{{ site.base_url }}disclosure/</loc><lastmod>{{ generated }}</lastmod></url>
+{% for o in offers %}
+  <url><loc>{{ site.base_url }}offers/{{ o.slug }}/</loc><lastmod>{{ generated }}</lastmod></url>
+{% endfor %}
+{% for c in compares %}
+  <url><loc>{{ site.base_url }}compare/{{ c.slug }}/</loc><lastmod>{{ generated }}</lastmod></url>
+{% endfor %}
+</urlset>
