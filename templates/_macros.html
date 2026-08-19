@@ -20,6 +20,10 @@
   {% endif %}
   <p>
     <a class="cta" href="{{ o.outbound_url }}" rel="{{ o.rel }}" target="_blank">{{ o.name }}の公式サイト</a>
+    {% if o.impression_url %}
+    {# A8素材付属の計測タグ。表示には影響しない1px画像。 #}
+    <img src="{{ o.impression_url }}" width="1" height="1" alt="">
+    {% endif %}
     {% if o.is_monetized %}<span class="cat">広告</span>{% endif %}
   </p>
 </div>

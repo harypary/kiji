@@ -50,6 +50,7 @@ class OfferView:
     verified: bool
     outbound_url: str
     rel: str
+    impression_url: str
     is_monetized: bool
     landing_url: str
     watch_url: str
@@ -198,6 +199,7 @@ def build_offer_views(catalog: Catalog, history: dict[str, list[Snapshot]],
             verified=offer.verified,
             outbound_url=offer.outbound_url,
             rel=offer.rel,
+            impression_url=offer.impression_url,
             is_monetized=offer.is_monetized,
             landing_url=offer.landing_url,
             watch_url=offer.watch.url,

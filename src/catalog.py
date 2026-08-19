@@ -83,6 +83,9 @@ class Offer:
     category: str
     landing_url: str
     affiliate_url: str
+    # A8素材付属の1pxインプレッション計測タグ。報酬の発生には関係しないが、
+    # 管理画面の「クリック率」の分母になる。無いと素材の良し悪しを比べられない。
+    impression_url: str
     watch: Watch
     pitch: str
     points: tuple[str, ...]
@@ -199,6 +202,9 @@ def load_catalog(path: Path) -> Catalog:
         affiliate = str(entry.get("affiliate_url", "") or "")
         if affiliate:
             _require_https(affiliate, f"{where}.affiliate_url")
+        impression = str(entry.get("impression_url", "") or "")
+        if impression:
+            _require_https(impression, f"{where}.impression_url")
 
         w = entry.get("watch") or {}
         watch_url = str(w.get("url", "") or "")
@@ -213,6 +219,7 @@ def load_catalog(path: Path) -> Catalog:
             category=str(entry.get("category", "")),
             landing_url=landing,
             affiliate_url=affiliate,
+            impression_url=impression,
             watch=Watch(url=watch_url,
                         labels=tuple(w.get("labels") or ()),
                         min_amount=float(w.get("min_amount", 500))),

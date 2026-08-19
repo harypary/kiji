@@ -53,6 +53,10 @@
 
 <p>
   <a class="cta" href="{{ offer.outbound_url }}" rel="{{ offer.rel }}" target="_blank">{{ offer.name }}の公式サイトを見る</a>
+  {% if offer.impression_url %}
+  {# A8素材付属の計測タグ。表示には影響しない1px画像。 #}
+  <img src="{{ offer.impression_url }}" width="1" height="1" alt="">
+  {% endif %}
   {% if offer.is_monetized %}<span class="cat">広告</span>{% endif %}
 </p>
 
