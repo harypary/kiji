@@ -25,7 +25,14 @@
 
 {{ m.verdict_block(offer) }}
 
+{# 料金の概念が無いサービス（転職エージェント等）もあるので見出しを分ける。
+   追っているのは実際には「公式ページが変わったこと」なので、
+   料金が無い場合はそう書く。 #}
+{% if offer.prices %}
 <h2>料金の変更履歴</h2>
+{% else %}
+<h2>掲載内容の変更履歴</h2>
+{% endif %}
 {% if offer.history | length > 1 %}
 <p class="note">
   記録開始 {{ offer.tracked_since }} / これまでに検出した変更 {{ offer.change_count }}回
@@ -47,7 +54,7 @@
 </table>
 {% else %}
 <p class="note">
-  記録は {{ offer.tracked_since }} の1件だけです。料金が変わった日にだけ行が増えます。
+  記録は {{ offer.tracked_since }} の1件だけです。{% if offer.prices %}料金が{% else %}公式ページの内容が{% endif %}変わった日にだけ行が増えます。
 </p>
 {% endif %}
 
