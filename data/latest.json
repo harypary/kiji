@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-08-12T09:05:17.173531+00:00",
+  "checked_at": "2026-08-23T09:46:40.605917+00:00",
   "offers": {
     "dmm-eikaiwa": {
       "note": "",
@@ -7,7 +7,7 @@
       "signature": "e44d7759b9653093",
       "slug": "dmm-eikaiwa",
       "token_count": 18,
-      "ts": "2026-08-12T09:05:17.174536+00:00",
+      "ts": "2026-08-23T09:46:40.605917+00:00",
       "values": [
         {
           "amount": 6980.0,
@@ -27,7 +27,7 @@
       "signature": "0b37b0e24836efe3",
       "slug": "nativecamp",
       "token_count": 27,
-      "ts": "2026-08-12T09:05:17.174536+00:00",
+      "ts": "2026-08-23T09:46:40.605917+00:00",
       "values": [
         {
           "amount": 6800.0,
@@ -36,13 +36,22 @@
         }
       ]
     },
-    "octopus-energy": {
-      "note": "",
-      "ok": true,
-      "signature": "5feceb66ffc86f38",
-      "slug": "octopus-energy",
-      "token_count": 2,
-      "ts": "2026-08-12T09:05:17.174536+00:00",
+    "strategy-career": {
+      "note": "金額が1つも見つかりません",
+      "ok": false,
+      "signature": "",
+      "slug": "strategy-career",
+      "token_count": 0,
+      "ts": "2026-08-23T09:46:40.605917+00:00",
+      "values": []
+    },
+    "toukobe": {
+      "note": "金額が1つも見つかりません",
+      "ok": false,
+      "signature": "",
+      "slug": "toukobe",
+      "token_count": 0,
+      "ts": "2026-08-23T09:46:40.605917+00:00",
       "values": []
     }
   }
