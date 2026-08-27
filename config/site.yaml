@@ -16,6 +16,10 @@ site:
   contact_url: https://github.com/harypary
   # GitHub Pages の公開URL。自分のユーザー名・リポジトリ名に必ず書き換えること。
   base_url: https://harypary.github.io/kiji/
+  # Google Search Console の所有権確認トークン（HTMLタグ方式）。
+  # docs/ は毎回作り直されるので、確認用ファイルを置くのではなく
+  # テンプレートの <head> に出す。消すと所有権確認が外れる。
+  search_console: EyEjp7zOi-M59id7G2iCEAKs6NZ3MX-NJEzVozWc4tc
 
 generation:
   # 同一ホストへの最低アクセス間隔(秒)。1.0 未満は設定できない。

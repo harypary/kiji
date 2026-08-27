@@ -143,6 +143,8 @@ class Site:
     stale_after_days: int
     recent_updates: int
     history_rows: int
+    # Search Console の所有権確認用トークン。空なら meta タグを出さない。
+    search_console: str = field(default="")
     user_agent: str = field(default="")
 
 
@@ -274,6 +276,7 @@ def load_site(path: Path) -> Site:
         stale_after_days=int(gen.get("stale_after_days", 14)),
         recent_updates=int(gen.get("recent_updates", 60)),
         history_rows=int(gen.get("history_rows", 24)),
+        search_console=str(site.get("search_console", "")),
         # 苦情の窓口が無いクローラは問答無用でブロックされる。必ず名乗る。
         user_agent=f"kiji-price-tracker/1.0 (+{contact})",
     )
