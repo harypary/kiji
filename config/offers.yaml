@@ -41,7 +41,7 @@ offers:
   # --------------------------------------------------------------
   # --------------------------------------------------------------
   # トウコベ（A8: s00000022646001 / 2026-08-10 提携承認済み）
-  # EPC 130.20 / 確定率 51.85% / 成果条件 新規無料オンライン面談 17,500円
+  # EPC 112.66 / 確定率 51.85% / 成果条件 新規無料オンライン面談 17,500円（2026-08-27 時点）
   #
   # 【成果対象が限定されている】記事を書くときに外さないこと
   #   ・対象年齢は小学1年生〜高校3年生、浪人生・高卒生
@@ -54,8 +54,10 @@ offers:
     kind: trial
     category: オンライン個別指導
     landing_url: https://www.toukobe.com/
-    affiliate_url: "https://px.a8.net/svt/ejp?a8mat=4BA05E+9X83QQ+4UQK+60H7M"
-    impression_url: "https://www12.a8.net/0.gif?a8mat=4BA05E+9X83QQ+4UQK+60H7M"
+    # 素材は「学びしらべ」(websiteId=002) で発行したもの。a8mat の2番目の区画が
+    # サイトIDに対応する。サイトを取り違えるとレポートが別サイトに計上される。
+    affiliate_url: "https://px.a8.net/svt/ejp?a8mat=4BA05E+9X84II+4UQK+60H7M"
+    impression_url: "https://www11.a8.net/0.gif?a8mat=4BA05E+9X84II+4UQK+60H7M"
     watch:
       # 公式サイトは本文6,517文字が取得できる。ただし料金は1円も載っておらず、
       # 「説明資料ダウンロード」に誘導する作り（実測: 円表記0件）。
@@ -79,7 +81,7 @@ offers:
   # --------------------------------------------------------------
   # strategy career / 明光キャリアパートナーズ
   # （A8: s00000026573001 / 2026-08-07 提携承認済み）
-  # EPC 202.40 / 確定率 17.72% / 成果条件 新規面談設定完了 78,000円
+  # EPC 140.16 / 確定率 17.72% / 成果条件 新規面談設定完了 78,000円（2026-08-27 時点）
   #
   # 【確定率17.72%の理由がはっきりしている】成果条件が二重に絞られている
   #   ・エンジニア経験者であること
@@ -96,8 +98,9 @@ offers:
     kind: trial
     category: エンジニア転職
     landing_url: https://meiko-career.jp/lp3/engineer/
-    affiliate_url: "https://px.a8.net/svt/ejp?a8mat=4BA05E+9W18J6+5P1E+5YJRM"
-    impression_url: "https://www17.a8.net/0.gif?a8mat=4BA05E+9W18J6+5P1E+5YJRM"
+    # 素材は「学びしらべ」(websiteId=002) で発行したもの。
+    affiliate_url: "https://px.a8.net/svt/ejp?a8mat=4BA05E+9W19AY+5P1E+5YJRM"
+    impression_url: "https://www11.a8.net/0.gif?a8mat=4BA05E+9W19AY+5P1E+5YJRM"
     watch:
       # 公式LPは本文1,076文字が取得できる。料金の概念が無いサービスなので
       # 金額は追わない。ページの変更検出だけ行う。
