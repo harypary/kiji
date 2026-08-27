@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-08-25T22:28:16.639462+00:00",
+  "checked_at": "2026-08-27T02:58:43.345554+00:00",
   "offers": {
     "dmm-eikaiwa": {
       "note": "",
@@ -7,7 +7,7 @@
       "signature": "e44d7759b9653093",
       "slug": "dmm-eikaiwa",
       "token_count": 18,
-      "ts": "2026-08-25T22:28:16.639583+00:00",
+      "ts": "2026-08-27T02:58:43.345690+00:00",
       "values": [
         {
           "amount": 6980.0,
@@ -24,10 +24,10 @@
     "nativecamp": {
       "note": "",
       "ok": true,
-      "signature": "401e9bdda3e7a939",
+      "signature": "0b37b0e24836efe3",
       "slug": "nativecamp",
-      "token_count": 26,
-      "ts": "2026-08-25T22:28:16.639583+00:00",
+      "token_count": 27,
+      "ts": "2026-08-27T02:58:43.345690+00:00",
       "values": [
         {
           "amount": 6800.0,
@@ -42,7 +42,7 @@
       "signature": "",
       "slug": "strategy-career",
       "token_count": 0,
-      "ts": "2026-08-25T22:28:16.639583+00:00",
+      "ts": "2026-08-27T02:58:43.345690+00:00",
       "values": []
     },
     "toukobe": {
@@ -51,7 +51,7 @@
       "signature": "",
       "slug": "toukobe",
       "token_count": 0,
-      "ts": "2026-08-25T22:28:16.639583+00:00",
+      "ts": "2026-08-27T02:58:43.345690+00:00",
       "values": []
     }
   }
