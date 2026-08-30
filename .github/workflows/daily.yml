@@ -15,6 +15,12 @@ on:
       - "static/**"
       - "src/**"
       - "main.py"
+      # テストと依存関係も対象にする。ここが抜けていると、CI が落ちた原因が
+      # テスト側にあったとき、それを直すコミットでは CI が再実行されない。
+      # 赤いまま気づかず、サイトも最後に成功したビルドのまま止まる。
+      - "tests/**"
+      - "requirements*.txt"
+      - ".github/workflows/**"
 
 permissions:
   # contents: write は料金履歴(data/)をリポジトリに書き戻すために必須。
