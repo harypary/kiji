@@ -8,8 +8,10 @@
 
 from __future__ import annotations
 
-from src.articles import build_update_views
-from src.catalog import Catalog
+from dataclasses import replace
+
+from src.articles import _price_note, build_update_views
+from src.catalog import Catalog, Offer, Watch
 from src.track import Change, Snapshot
 
 
@@ -52,7 +54,6 @@ class TestPriceNote:
     """
 
     def _offer(self, labels, listed=()):
-        from src.catalog import Offer, Watch
         return Offer(
             slug="x", name="x", vendor="x", kind="trial", category="x",
             landing_url="https://example.com/", affiliate_url="",
@@ -62,14 +63,12 @@ class TestPriceNote:
             pitch="", points=(), verdict="", listed_prices=listed)
 
     def test_ラベル未指定なら公式に料金の記載が無いと書く(self):
-        from src.articles import _price_note
         note = _price_note(self._offer([]), None, stale=False,
                            needs_review=False)
         assert "掲載されていません" in note
         assert "確認できませんでした" not in note
 
     def test_ラベル指定ありで取れなければ取得失敗と書く(self):
-        from src.articles import _price_note
         note = _price_note(self._offer(["プランA"]), None, stale=False,
                            needs_review=False)
         assert "確認できませんでした" in note
@@ -77,8 +76,6 @@ class TestPriceNote:
     def test_利用者無料のサービスは料金が無いと書く(self):
         # 転職エージェントは求職者から費用を取らない。「公式に記載が無い」と
         # 書くと、どこかに費用があるのに伏せているように読まれる。
-        from src.articles import _price_note
-        from dataclasses import replace
         offer = replace(self._offer([]), pricing="free")
         note = _price_note(offer, None, stale=False, needs_review=False)
         assert "費用がかからない" in note
