@@ -48,6 +48,18 @@
 <p class="note">{{ o.price_note }}（最終確認 {{ o.last_checked }}）</p>
 {% endmacro %}
 
+{# どんな人に向くか。試したかどうかとは別枠であることを見出しと注記で示す。 #}
+{% macro fit_block(o) %}
+{% if o.fit_note %}
+<h2>どんな人に向くか</h2>
+<p>{{ o.fit_note }}</p>
+<p class="note">
+  ここは公式サイトに書かれている条件から判断したもので、
+  実際に使ったうえでの評価ではありません。
+</p>
+{% endif %}
+{% endmacro %}
+
 {% macro verdict_block(o) %}
 {% if o.verified %}
 <h2>実際に試した感想</h2>

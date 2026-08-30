@@ -47,6 +47,7 @@ class OfferView:
     pitch: str
     points: tuple[str, ...]
     verdict: str
+    fit_note: str
     verified: bool
     outbound_url: str
     rel: str
@@ -148,6 +149,17 @@ def _price_note(offer: Offer, snap: Snapshot | None, stale: bool,
     if not offer.watch.enabled:
         return ("このサービスは料金がページ上のテキストとして取得できないため、"
                 "自動追跡していません。公式サイトでご確認ください。")
+    # 拾う金額のラベルを1つも指定していない案件は、そもそも公式が料金を
+    # 公表していない（相談・カウンセリングへ誘導する作り）。実測で確認済み。
+    # ここを「確認できませんでした」と書くと、料金が存在するのに
+    # こちらが取り損ねたように読める。追跡しているのはページの変更だけ。
+    if not offer.watch.labels:
+        if offer.pricing == "free":
+            return ("このサービスは利用者側の費用がかからないため、料金はありません。"
+                    "掲載内容の変更は毎日確認しています。")
+        return ("このサービスは公式サイトに料金が掲載されていません"
+                "（申し込み前の相談で提示されます）。"
+                "ページの変更は毎日確認しています。")
     if snap is None or not snap.ok:
         return "料金を確認できませんでした。公式サイトでご確認ください。"
     if stale:
@@ -196,6 +208,7 @@ def build_offer_views(catalog: Catalog, history: dict[str, list[Snapshot]],
             pitch=offer.pitch,
             points=offer.points,
             verdict=offer.verdict,
+            fit_note=offer.fit_note,
             verified=offer.verified,
             outbound_url=offer.outbound_url,
             rel=offer.rel,

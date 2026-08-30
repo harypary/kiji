@@ -90,6 +90,15 @@ class Offer:
     pitch: str
     points: tuple[str, ...]
     verdict: str
+    # 「どんな人に向くか」の判断。公式の掲載条件から読み取れることだけを書く。
+    # verdict と混ぜないのは、試したかどうかを読者が区別できなくなるため。
+    # ここを埋めても verified にはならず、順位も上がらない。
+    fit_note: str = ""
+    # 料金の扱い。公式が金額を出していない案件で、理由を取り違えないための指定。
+    #   undisclosed … 料金はあるが公式に出ていない（相談で提示される）
+    #   free        … 利用者は無料。料金という概念が無い（転職エージェント等）
+    # 金額を拾える案件では使わない。
+    pricing: str = "undisclosed"
     listed_prices: tuple[ListedPrice, ...] = ()
     # 上の料金を人が確認した日。これ以降にページの変化を検出したら
     # 「要確認」を出す。
@@ -228,6 +237,8 @@ def load_catalog(path: Path) -> Catalog:
             pitch=str(entry.get("pitch", "")),
             points=tuple(entry.get("points") or ()),
             verdict=str(entry.get("verdict", "") or ""),
+            fit_note=str(entry.get("fit_note", "") or ""),
+            pricing=str(entry.get("pricing", "undisclosed")),
             listed_prices=tuple(
                 ListedPrice(label=str(_require(p, "label", where)),
                             amount=float(_require(p, "amount", where)),

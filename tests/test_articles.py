@@ -41,3 +41,45 @@ class TestUpdateViews:
         changes = [_change("octopus-energy"), _change("toukobe")]
         views = build_update_views(changes, _catalog(), limit=1)
         assert views == []
+
+
+class TestPriceNote:
+    """料金が出せない理由を取り違えないこと。
+
+    「公式が料金を公表していない」と「こちらが取り損ねた」は
+    読者にとって意味が違う。前者を後者の言い方で書くと、
+    どこかに料金が載っているのに隠していると読まれる。
+    """
+
+    def _offer(self, labels, listed=()):
+        from src.catalog import Offer, Watch
+        return Offer(
+            slug="x", name="x", vendor="x", kind="trial", category="x",
+            landing_url="https://example.com/", affiliate_url="",
+            impression_url="",
+            watch=Watch(url="https://example.com/", labels=tuple(labels),
+                        min_amount=0.0),
+            pitch="", points=(), verdict="", listed_prices=listed)
+
+    def test_ラベル未指定なら公式に料金の記載が無いと書く(self):
+        from src.articles import _price_note
+        note = _price_note(self._offer([]), None, stale=False,
+                           needs_review=False)
+        assert "掲載されていません" in note
+        assert "確認できませんでした" not in note
+
+    def test_ラベル指定ありで取れなければ取得失敗と書く(self):
+        from src.articles import _price_note
+        note = _price_note(self._offer(["プランA"]), None, stale=False,
+                           needs_review=False)
+        assert "確認できませんでした" in note
+
+    def test_利用者無料のサービスは料金が無いと書く(self):
+        # 転職エージェントは求職者から費用を取らない。「公式に記載が無い」と
+        # 書くと、どこかに費用があるのに伏せているように読まれる。
+        from src.articles import _price_note
+        from dataclasses import replace
+        offer = replace(self._offer([]), pricing="free")
+        note = _price_note(offer, None, stale=False, needs_review=False)
+        assert "費用がかからない" in note
+        assert "掲載されていません" not in note
