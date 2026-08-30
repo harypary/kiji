@@ -96,6 +96,24 @@ def verify_site(docs: Path, site: Site) -> list[str]:
                 problems.append(
                     f"{rel}: 広告主へのリンクに sponsored/nofollow がありません: {href}")
 
+        # 自サイト内へのリンクが実ファイルに対応しているか。
+        # sitemap 側だけ見ていたので、sitemap に載らない導線
+        # （更新履歴から案件ページへのリンク等）の 404 を見逃していた。
+        for attrs in ANCHOR_RE.findall(text):
+            href_m = ATTR_HREF_RE.search(attrs)
+            if href_m is None:
+                continue
+            href = href_m.group(1)
+            if not href.startswith(site.base_url):
+                continue
+            path_only = urlsplit(href).path
+            base_path = urlsplit(site.base_url).path
+            inner = path_only[len(base_path):]
+            target = docs / (inner + "index.html"
+                             if inner.endswith("/") or not inner else inner)
+            if not target.exists():
+                problems.append(f"{rel}: 実体のないページへのリンク: {href}")
+
     # sitemap の URL が実ファイルと対応しているか
     sitemap = docs / "sitemap.xml"
     if sitemap.exists():

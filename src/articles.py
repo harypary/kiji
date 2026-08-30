@@ -234,13 +234,19 @@ def build_compare_views(views: list[OfferView],
 
 def build_update_views(changes: list[Change], catalog: Catalog,
                        limit: int) -> list[UpdateView]:
+    """更新履歴。config に無い slug は出さない。
+
+    履歴(jsonl)は追記専用なので、config から外した案件の行も残り続ける。
+    それをそのまま並べると、slug をサービス名として表示し、生成されていない
+    /offers/<slug>/ へリンクすることになる。実際 octopus-energy で
+    404 への内部リンクを公開していた。データは消さず、表示から外す。
+    """
     out: list[UpdateView] = []
     for c in changes[:limit]:
         try:
             name = catalog.by_slug(c.slug).name
         except KeyError:
-            # config から消した案件の履歴が残っているだけ。名前は出せない。
-            name = c.slug
+            continue
         out.append(UpdateView(
             date=c.when.strftime("%Y-%m-%d"),
             slug=c.slug,

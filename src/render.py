@@ -31,6 +31,27 @@ def _env(templates: Path) -> Environment:
     return env
 
 
+def _clean(out: Path) -> None:
+    """出力先を作り直す。前回の生成物を残さない。
+
+    docs/ は .gitignore 済みで、CI は毎回まっさらな checkout から
+    作り直す。一方ローカルは上書きしかしないので、config から外した
+    案件のページが残り続ける。その状態だと --verify が「リンク先は
+    存在する」と判定してしまい、本番だけ 404 になる食い違いが起きる。
+    実際 octopus-energy でそうなった。
+
+    誤って別のディレクトリを消さないよう、自分が作った跡
+    (.nojekyll) があるときだけ消す。
+    """
+    if not out.exists():
+        return
+    if not (out / ".nojekyll").exists():
+        raise RuntimeError(
+            f"{out} は生成物ディレクトリに見えません（.nojekyll が無い）。"
+            "消す前に中身を確認してください")
+    shutil.rmtree(out)
+
+
 def _write(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
@@ -41,6 +62,7 @@ def render_site(out: Path, templates: Path, static: Path, site: Site,
                 updates: list[UpdateView], stats: Stats,
                 now: datetime | None = None) -> int:
     now = now or datetime.now(UTC)
+    _clean(out)
     env = _env(templates)
     ctx = {
         "site": site,
