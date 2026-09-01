@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-08-31T00:14:48.971629+00:00",
+  "checked_at": "2026-09-01T01:01:20.751813+00:00",
   "offers": {
     "campustop": {
       "note": "金額が1つも見つかりません",
@@ -7,24 +7,24 @@
       "signature": "",
       "slug": "campustop",
       "token_count": 0,
-      "ts": "2026-08-31T00:14:48.971767+00:00",
+      "ts": "2026-09-01T01:01:20.751997+00:00",
       "values": []
     },
     "dmm-eikaiwa": {
       "note": "",
       "ok": true,
-      "signature": "e44d7759b9653093",
+      "signature": "646f1d72d7677af9",
       "slug": "dmm-eikaiwa",
-      "token_count": 18,
-      "ts": "2026-08-31T00:14:48.971767+00:00",
+      "token_count": 17,
+      "ts": "2026-09-01T01:01:20.751997+00:00",
       "values": [
         {
-          "amount": 6980.0,
+          "amount": 1745.0,
           "confidence": "low",
           "label": "スタンダードプラン"
         },
         {
-          "amount": 22880.0,
+          "amount": 5720.0,
           "confidence": "low",
           "label": "プラスネイティブプラン"
         }
@@ -36,16 +36,16 @@
       "signature": "4f7e93829ac383f5",
       "slug": "joho-labo",
       "token_count": 5,
-      "ts": "2026-08-31T00:14:48.971767+00:00",
+      "ts": "2026-09-01T01:01:20.751997+00:00",
       "values": []
     },
     "nativecamp": {
       "note": "",
       "ok": true,
-      "signature": "401e9bdda3e7a939",
+      "signature": "0b37b0e24836efe3",
       "slug": "nativecamp",
-      "token_count": 26,
-      "ts": "2026-08-31T00:14:48.971767+00:00",
+      "token_count": 27,
+      "ts": "2026-09-01T01:01:20.751997+00:00",
       "values": [
         {
           "amount": 6800.0,
@@ -60,16 +60,7 @@
       "signature": "",
       "slug": "strategy-career",
       "token_count": 0,
-      "ts": "2026-08-31T00:14:48.971767+00:00",
-      "values": []
-    },
-    "toukobe": {
-      "note": "金額が1つも見つかりません",
-      "ok": false,
-      "signature": "",
-      "slug": "toukobe",
-      "token_count": 0,
-      "ts": "2026-08-31T00:14:48.971767+00:00",
+      "ts": "2026-09-01T01:01:20.751997+00:00",
       "values": []
     }
   }

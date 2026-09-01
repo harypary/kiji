@@ -8,3 +8,5 @@
 {"note": "", "ok": true, "signature": "0b37b0e24836efe3", "slug": "nativecamp", "token_count": 27, "ts": "2026-08-27T10:37:34.362591+00:00", "values": [{"amount": 6800.0, "confidence": "low", "label": "プレミアムプラン"}]}
 {"note": "", "ok": true, "signature": "401e9bdda3e7a939", "slug": "nativecamp", "token_count": 26, "ts": "2026-08-29T23:55:44.498794+00:00", "values": [{"amount": 6800.0, "confidence": "low", "label": "プレミアムプラン"}]}
 {"note": "", "ok": true, "signature": "4f7e93829ac383f5", "slug": "joho-labo", "token_count": 5, "ts": "2026-08-30T00:20:13.528639+00:00", "values": []}
+{"note": "", "ok": true, "signature": "0b37b0e24836efe3", "slug": "nativecamp", "token_count": 27, "ts": "2026-09-01T01:01:20.751997+00:00", "values": [{"amount": 6800.0, "confidence": "low", "label": "プレミアムプラン"}]}
+{"note": "", "ok": true, "signature": "646f1d72d7677af9", "slug": "dmm-eikaiwa", "token_count": 17, "ts": "2026-09-01T01:01:20.751997+00:00", "values": [{"amount": 1745.0, "confidence": "low", "label": "スタンダードプラン"}, {"amount": 5720.0, "confidence": "low", "label": "プラスネイティブプラン"}]}
