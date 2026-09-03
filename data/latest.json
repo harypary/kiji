@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-03T11:06:34.450539+00:00",
+  "checked_at": "2026-09-03T11:09:59.803458+00:00",
   "offers": {
     "campustop": {
       "note": "金額が1つも見つかりません",
@@ -7,7 +7,7 @@
       "signature": "",
       "slug": "campustop",
       "token_count": 0,
-      "ts": "2026-09-03T11:06:34.450662+00:00",
+      "ts": "2026-09-03T11:09:59.803546+00:00",
       "values": []
     },
     "dmm-eikaiwa": {
@@ -16,7 +16,7 @@
       "signature": "018c7a88e91bddd1",
       "slug": "dmm-eikaiwa",
       "token_count": 17,
-      "ts": "2026-09-03T11:06:34.450662+00:00",
+      "ts": "2026-09-03T11:09:59.803546+00:00",
       "values": [
         {
           "amount": 1745.0,
@@ -36,7 +36,7 @@
       "signature": "4f7e93829ac383f5",
       "slug": "joho-labo",
       "token_count": 5,
-      "ts": "2026-09-03T11:06:34.450662+00:00",
+      "ts": "2026-09-03T11:09:59.803546+00:00",
       "values": []
     },
     "nativecamp": {
@@ -45,7 +45,7 @@
       "signature": "0b37b0e24836efe3",
       "slug": "nativecamp",
       "token_count": 27,
-      "ts": "2026-09-03T11:06:34.450662+00:00",
+      "ts": "2026-09-03T11:09:59.803546+00:00",
       "values": [
         {
           "amount": 6800.0,
@@ -60,7 +60,16 @@
       "signature": "",
       "slug": "strategy-career",
       "token_count": 0,
-      "ts": "2026-09-03T11:06:34.450662+00:00",
+      "ts": "2026-09-03T11:09:59.803546+00:00",
+      "values": []
+    },
+    "toukobe": {
+      "note": "金額が1つも見つかりません",
+      "ok": false,
+      "signature": "",
+      "slug": "toukobe",
+      "token_count": 0,
+      "ts": "2026-09-03T11:09:59.803546+00:00",
       "values": []
     },
     "winschool": {
@@ -69,7 +78,7 @@
       "signature": "",
       "slug": "winschool",
       "token_count": 0,
-      "ts": "2026-09-03T11:06:34.450662+00:00",
+      "ts": "2026-09-03T11:09:59.803546+00:00",
       "values": []
     }
   }
