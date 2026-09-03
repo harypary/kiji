@@ -1,0 +1,19 @@
+{#
+  サイトマップインデックス。中身は sitemap.xml 1本だけを指す。
+
+  【なぜ1本しかないのにインデックスを置くのか】
+  Search Console が sitemap.xml を「取得できませんでした」のまま
+  1週間更新しなかった（2026-08-27 送信 → 09-03 も同じ）。配信側は
+  実測で全項目正常だった: 200 / application/xml / リダイレクトなし /
+  XML妥当 / 全URLがプロパティのプレフィックス配下 / Googlebot の
+  User-Agent でも同一応答 / ホストルートの robots.txt は404（＝制限なし）。
+  削除して再送信しても即座に同じ状態に戻る。
+
+  そこで「あのURLに紐づいた記録が固まっている」のか「そもそも取得
+  できない」のかを切り分けるため、別URLの入口を用意する。
+  こちらが取得できれば前者、できなければ後者と分かる。
+#}
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>{{ site.base_url }}sitemap.xml</loc><lastmod>{{ generated }}</lastmod></sitemap>
+</sitemapindex>

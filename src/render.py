@@ -88,6 +88,8 @@ def render_site(out: Path, templates: Path, static: Path, site: Site,
         emit(f"compare/{c.slug}/index.html", "compare.html", compare=c)
 
     emit("sitemap.xml", "sitemap.xml", offers=offers, compares=compares)
+    # 取得できない原因の切り分け用。詳細は templates/sitemap_index.xml。
+    emit("sitemap_index.xml", "sitemap_index.xml")
     emit("robots.txt", "robots.txt")
     emit("feed.xml", "feed.xml", updates=updates[:50])
 

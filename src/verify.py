@@ -14,7 +14,8 @@ from src.catalog import Site
 
 REQUIRED = ["index.html", "updates/index.html", "methodology/index.html",
             "disclosure/index.html",
-            "sitemap.xml", "robots.txt", "feed.xml", "assets/style.css"]
+            "sitemap.xml", "sitemap_index.xml", "robots.txt", "feed.xml",
+            "assets/style.css"]
 
 # <a> タグを1つの単位として見る。href と rel を別々に全文検索して
 # 近さで対応付けると、隣のリンクの rel を誤って拾う。実際それで
