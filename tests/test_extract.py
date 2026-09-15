@@ -44,6 +44,22 @@ class TestSignature:
         b = extract("<p>1,200円</p>", [])
         assert a.signature != b.signature
 
+    def test_下限未満の金額は署名に入れない(self):
+        # 実測: ネイティブキャンプは A/B テストで2種類のページを出し分ける。
+        # 片方のポップアップにだけ「0円」があり、署名が数日おきに往復して
+        # 料金が動いていないのに偽の更新履歴が積み上がった。
+        a = extract("<p>プレミアムプラン 6,800円 7,480円</p>"
+                    "<div>100コイン（約200円分）が 0円</div>", [])
+        b = extract("<p>プレミアムプラン 6,800円 7,480円</p>"
+                    "<div>100コイン（約200円分）の予約レッスン1回無料</div>", [])
+        assert a.signature == b.signature
+
+    def test_下限以上の金額が変われば署名は変わる(self):
+        # 下限未満を捨てても、料金そのものの変化は取りこぼさないこと。
+        a = extract("<p>6,800円 7,480円</p><div>0円</div>", [])
+        b = extract("<p>6,980円 7,480円</p><div>0円</div>", [])
+        assert a.signature != b.signature
+
     def test_金額が無ければ失敗として返す(self):
         # 200 が返っているのに金額ゼロ。SPA かページの作り替え。
         # 履歴を空で上書きしないよう ok=False にする。

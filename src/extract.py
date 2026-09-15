@@ -25,6 +25,12 @@ import html as html_mod
 import re
 from dataclasses import dataclass, field
 
+# 署名の作り方の版。作り方を変えたら上げる。
+# 版が違う署名どうしを比べると、ページが変わっていなくても「変わった」になる。
+#   1 … ページ上の全金額（〜2026-09-15）
+#   2 … 下限（min_amount）以上の金額だけ
+SIGNATURE_VERSION = 2
+
 # 金額と単位の間に改行・タブ・全角空白が入る。実測済み。
 YEN_RE = re.compile(r"(\d{1,3}(?:,\d{3})+|\d+)\s*円")
 TAG_RE = re.compile(r"<(script|style)[^>]*>.*?</\1>", re.S | re.I)
@@ -122,13 +128,23 @@ def extract(html: str, labels: list[str],
         return Extraction(ok=False, signature="", note="金額が1つも見つかりません")
 
     amounts = [a for a, _ in found]
-    # 署名は金額の集合から作る。並び順で変わらないよう並べ替えてから。
-    signature = hashlib.sha256(
-        ",".join(f"{a:.0f}" for a in sorted(set(amounts))).encode()
-    ).hexdigest()[:16]
-
     # ラベルの料金候補は下限以上のものだけ。下限未満は別文脈の数字。
     plausible = [(a, p) for a, p in found if a >= min_amount]
+
+    # 署名も下限以上の金額だけで作る。並び順で変わらないよう並べ替えてから。
+    #
+    # 以前はページ上の全金額で作っていた。ネイティブキャンプは A/B テストで
+    # 「レッスン完了ボーナス」ポップアップの文言を2種類出し分けており、
+    # 片方にだけ「0円」が入る（もう片方にも「約200円分」がある）。
+    # 料金は6,800円のまま動いていないのに署名が数日おきに往復し、
+    # 公開中の更新履歴20件のうち大半が偽の「内容が変わりました」になった。
+    # 料金判定で捨てている数字を、変化検出でだけ拾う理由は無い。
+    #
+    # 下限以上の金額が1つも無いページは、全金額で作る（ok を保つため）。
+    sig_amounts = [a for a, _ in plausible] or amounts
+    signature = hashlib.sha256(
+        ",".join(f"{a:.0f}" for a in sorted(set(sig_amounts))).encode()
+    ).hexdigest()[:16]
 
     values: list[Value] = []
     for label in labels:

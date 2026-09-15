@@ -12,7 +12,8 @@ from dataclasses import replace
 
 from src.articles import _price_note, build_update_views
 from src.catalog import Catalog, Offer, Watch
-from src.track import Change, Snapshot
+from src.extract import Value
+from src.track import Change, Snapshot, build_changes, should_record
 
 
 def _snapshot(slug: str) -> Snapshot:
@@ -80,3 +81,42 @@ class TestPriceNote:
         note = _price_note(offer, None, stale=False, needs_review=False)
         assert "費用がかからない" in note
         assert "掲載されていません" not in note
+
+
+def _snap(ts: str, sig: str, sigv: int, amount: float) -> Snapshot:
+    return Snapshot(ts=ts, slug="nativecamp", ok=True, signature=sig,
+                    values=(Value(label="プレミアムプラン", amount=amount,
+                                  confidence="low"),),
+                    token_count=26, note="", sigv=sigv)
+
+
+class TestRealChange:
+    """署名の揺れを変化として公開しないこと。
+
+    実測: ネイティブキャンプは A/B テストで署名が 401e9bdd ↔ 0b37b0e2 を
+    往復し、料金6,800円のまま公開中の更新履歴に偽の変化が積み上がった。
+    """
+
+    def test_旧版の署名が往復しても値が同じなら変化ではない(self):
+        hist = {"nativecamp": [_snap("2026-09-10T00:00:00+00:00", "401e9bdd", 1, 6800),
+                               _snap("2026-09-11T00:00:00+00:00", "0b37b0e2", 1, 6800),
+                               _snap("2026-09-12T00:00:00+00:00", "401e9bdd", 1, 6800)]}
+        labels = [c.label for c in build_changes(hist)]
+        assert labels == ["掲載開始"]
+
+    def test_旧版でも値が変わっていれば変化として残す(self):
+        # 実測: DMM英会話は 09-01 に初月特典価格が追加され、本当に変わった。
+        hist = {"nativecamp": [_snap("2026-08-07T00:00:00+00:00", "e44d7759", 1, 6980),
+                               _snap("2026-09-01T00:00:00+00:00", "646f1d72", 1, 1745)]}
+        assert "内容が変わりました" in [c.label for c in build_changes(hist)]
+
+    def test_署名の版が変わった日は変化にしないが記録はする(self):
+        old = _snap("2026-09-14T00:00:00+00:00", "401e9bdd", 1, 6800)
+        new = _snap("2026-09-15T00:00:00+00:00", "aaaaaaaa", 2, 6800)
+        assert should_record(old, new) is True
+        assert [c.label for c in build_changes({"nativecamp": [old, new]})] == ["掲載開始"]
+
+    def test_新版どうしなら署名の違いをそのまま変化とする(self):
+        a = _snap("2026-09-15T00:00:00+00:00", "aaaaaaaa", 2, 6800)
+        b = _snap("2026-09-16T00:00:00+00:00", "bbbbbbbb", 2, 6800)
+        assert "内容が変わりました" in [c.label for c in build_changes({"nativecamp": [a, b]})]

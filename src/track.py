@@ -20,7 +20,7 @@ from datetime import UTC, datetime
 from itertools import pairwise
 from pathlib import Path
 
-from src.extract import Extraction, Value
+from src.extract import SIGNATURE_VERSION, Extraction, Value
 
 
 @dataclass(frozen=True)
@@ -32,6 +32,9 @@ class Snapshot:
     values: tuple[Value, ...]
     token_count: int
     note: str
+    # 署名の作り方の版（src/extract.py の SIGNATURE_VERSION）。
+    # 版を記録していない古い行は 1。
+    sigv: int = 1
 
     @property
     def when(self) -> datetime:
@@ -91,7 +94,8 @@ class Change:
 def to_snapshot(slug: str, ex: Extraction, now: datetime) -> Snapshot:
     return Snapshot(ts=now.isoformat(), slug=slug, ok=ex.ok,
                     signature=ex.signature, values=ex.values,
-                    token_count=ex.token_count, note=ex.note)
+                    token_count=ex.token_count, note=ex.note,
+                    sigv=SIGNATURE_VERSION)
 
 
 def _value_to_dict(v: Value) -> dict:
@@ -106,7 +110,7 @@ def _value_from_dict(d: dict) -> Value:
 def _to_dict(s: Snapshot) -> dict:
     return {"ts": s.ts, "slug": s.slug, "ok": s.ok, "signature": s.signature,
             "values": [_value_to_dict(v) for v in s.values],
-            "token_count": s.token_count, "note": s.note}
+            "token_count": s.token_count, "note": s.note, "sigv": s.sigv}
 
 
 def _from_dict(d: dict) -> Snapshot:
@@ -114,7 +118,8 @@ def _from_dict(d: dict) -> Snapshot:
                     signature=d.get("signature", ""),
                     values=tuple(_value_from_dict(v) for v in d.get("values", [])),
                     token_count=int(d.get("token_count", 0)),
-                    note=d.get("note", ""))
+                    note=d.get("note", ""),
+                    sigv=int(d.get("sigv", 1)))
 
 
 def load_history(path: Path) -> dict[str, list[Snapshot]]:
@@ -148,6 +153,29 @@ def append(path: Path, snaps: list[Snapshot]) -> None:
                                sort_keys=True) + "\n")
 
 
+def _values_key(s: Snapshot) -> tuple:
+    return tuple(sorted((v.label, v.amount) for v in s.values))
+
+
+def is_real_change(prev: Snapshot, cur: Snapshot) -> bool:
+    """2つの成功スナップショットの間で、ページが実際に変わったか。
+
+    - 署名の版が違う … 比べられない。作り方の違いで必ず食い違うので、
+      変化とはみなさない（その日を新しい基準にするだけ）。
+    - 両方とも版1   … 版1の署名は下限未満の数字（ポップアップの「0円」等）
+      まで含んでいて、A/B テストで往復した。拾った料金の値が同じなら
+      ノイズとして扱う。値が変わっていれば本物（DMM英会話 09-01 など）。
+    - 版2どうし     … 署名の比較をそのまま信じる。
+    """
+    if prev.sigv != cur.sigv:
+        return False
+    if prev.signature == cur.signature:
+        return False
+    if cur.sigv == 1:
+        return _values_key(prev) != _values_key(cur)
+    return True
+
+
 def should_record(previous: Snapshot | None, current: Snapshot) -> bool:
     """履歴に1行足すべきか。
 
@@ -157,6 +185,10 @@ def should_record(previous: Snapshot | None, current: Snapshot) -> bool:
     if not current.ok:
         return False
     if previous is None:
+        return True
+    # 署名の版が変わった日は、変化でなくても1行残して新しい基準にする。
+    # 残さないと、以後ずっと旧版の行と比べ続けることになる。
+    if previous.sigv != current.sigv:
         return True
     return previous.signature != current.signature
 
@@ -178,7 +210,7 @@ def build_changes(history: dict[str, list[Snapshot]]) -> list[Change]:
         changes.append(Change(ts=oks[0].ts, slug=slug, before=None,
                               after=oks[0]))
         for prev, cur in pairwise(oks):
-            if prev.signature != cur.signature:
+            if is_real_change(prev, cur):
                 changes.append(Change(ts=cur.ts, slug=slug, before=prev,
                                       after=cur))
     changes.sort(key=lambda c: c.ts, reverse=True)

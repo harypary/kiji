@@ -17,7 +17,7 @@ from datetime import datetime
 from itertools import pairwise
 
 from src.catalog import Catalog, Offer, Site
-from src.track import Change, Snapshot, last_ok
+from src.track import Change, Snapshot, is_real_change, last_ok
 
 # 未検証の案件にかける係数。上位に来させないための重し。
 UNVERIFIED_PENALTY = 0.25
@@ -126,13 +126,11 @@ def _needs_review(offer: Offer, history: list[Snapshot]) -> bool:
     if not offer.listed_prices or not offer.prices_checked:
         return False
     oks = [s for s in history if s.ok]
-    after = [s for s in oks if s.ts[:10] > offer.prices_checked]
-    if not after or len(oks) < 2:
-        return False
-    # 確認日より後に signature が動いていれば要確認
-    base = [s for s in oks if s.ts[:10] <= offer.prices_checked]
-    baseline = base[-1] if base else oks[0]
-    return any(s.signature != baseline.signature for s in after)
+    # 確認日より後に、実際の変化が1回でもあれば要確認。
+    # 判定は更新履歴と同じ基準（track.is_real_change）に揃える。揃っていないと
+    # 「更新履歴には何も出ていないのに要確認だけ立つ」食い違いが起きる。
+    return any(is_real_change(prev, cur) for prev, cur in pairwise(oks)
+               if cur.ts[:10] > offer.prices_checked)
 
 
 def _price_note(offer: Offer, snap: Snapshot | None, stale: bool,
