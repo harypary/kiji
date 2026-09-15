@@ -1,22 +1,24 @@
 {
-  "checked_at": "2026-09-15T00:21:33.319609+00:00",
+  "checked_at": "2026-09-15T02:59:05.968552+00:00",
   "offers": {
     "campustop": {
       "note": "金額が1つも見つかりません",
       "ok": false,
       "signature": "",
+      "sigv": 2,
       "slug": "campustop",
       "token_count": 0,
-      "ts": "2026-09-15T00:21:33.319701+00:00",
+      "ts": "2026-09-15T02:59:05.968641+00:00",
       "values": []
     },
     "dmm-eikaiwa": {
       "note": "",
       "ok": true,
-      "signature": "018c7a88e91bddd1",
+      "signature": "56365cc256a824c6",
+      "sigv": 2,
       "slug": "dmm-eikaiwa",
       "token_count": 17,
-      "ts": "2026-09-15T00:21:33.319701+00:00",
+      "ts": "2026-09-15T02:59:05.968641+00:00",
       "values": [
         {
           "amount": 1745.0,
@@ -34,18 +36,20 @@
       "note": "",
       "ok": true,
       "signature": "4f7e93829ac383f5",
+      "sigv": 2,
       "slug": "joho-labo",
       "token_count": 5,
-      "ts": "2026-09-15T00:21:33.319701+00:00",
+      "ts": "2026-09-15T02:59:05.968641+00:00",
       "values": []
     },
     "nativecamp": {
       "note": "",
       "ok": true,
-      "signature": "0b37b0e24836efe3",
+      "signature": "4050eb3dc6b49fe6",
+      "sigv": 2,
       "slug": "nativecamp",
-      "token_count": 27,
-      "ts": "2026-09-15T00:21:33.319701+00:00",
+      "token_count": 26,
+      "ts": "2026-09-15T02:59:05.968641+00:00",
       "values": [
         {
           "amount": 6800.0,
@@ -58,27 +62,30 @@
       "note": "金額が1つも見つかりません",
       "ok": false,
       "signature": "",
+      "sigv": 2,
       "slug": "strategy-career",
       "token_count": 0,
-      "ts": "2026-09-15T00:21:33.319701+00:00",
+      "ts": "2026-09-15T02:59:05.968641+00:00",
       "values": []
     },
     "toukobe": {
       "note": "金額が1つも見つかりません",
       "ok": false,
       "signature": "",
+      "sigv": 2,
       "slug": "toukobe",
       "token_count": 0,
-      "ts": "2026-09-15T00:21:33.319701+00:00",
+      "ts": "2026-09-15T02:59:05.968641+00:00",
       "values": []
     },
     "winschool": {
       "note": "金額が1つも見つかりません",
       "ok": false,
       "signature": "",
+      "sigv": 2,
       "slug": "winschool",
       "token_count": 0,
-      "ts": "2026-09-15T00:21:33.319701+00:00",
+      "ts": "2026-09-15T02:59:05.968641+00:00",
       "values": []
     }
   }
