@@ -22,3 +22,4 @@
 {"note": "", "ok": true, "signature": "56365cc256a824c6", "sigv": 2, "slug": "dmm-eikaiwa", "token_count": 17, "ts": "2026-09-15T02:59:05.968641+00:00", "values": [{"amount": 1745.0, "confidence": "low", "label": "スタンダードプラン"}, {"amount": 5720.0, "confidence": "low", "label": "プラスネイティブプラン"}]}
 {"note": "", "ok": true, "signature": "4f7e93829ac383f5", "sigv": 2, "slug": "joho-labo", "token_count": 5, "ts": "2026-09-15T02:59:05.968641+00:00", "values": []}
 {"note": "", "ok": true, "signature": "f6d2f8ae0b6dac47", "sigv": 2, "slug": "winschool", "token_count": 6, "ts": "2026-11-01T00:44:45.461984+00:00", "values": []}
+{"note": "", "ok": true, "signature": "7d86b48acdec123e", "sigv": 2, "slug": "campustop", "token_count": 1, "ts": "2026-11-11T01:44:12.084433+00:00", "values": []}
